@@ -1,4 +1,22 @@
 <div id="iconsarea">
-    
 
+    {% if post.likes.count == 1 and request.user in post.likes.all %}
+        <p>🥇 You're the first to like this post 🥇 </p>
+    {% elif post.likes.count == 1 and request.user not in post.likes.all %}
+        <p>This post is liked by {{post.likers.0.username}} </p>
+    {% elif post.likes.count == 2 and request.user not in post.likes.all %}
+        <p>This post is liked by {{post.likes.all.0}} and {{post.likes.all.1}} </p>
+    {% elif post.likes.count == 2 and request.user in post.likes.all %}
+        {% if request.user == post.likes.all.0 %}
+            <p>This post is liked by you and {{post.likes.all.1}}</p>
+        {% else %}
+            <p>This post is liked by you and {{post.likes.all.0}}</p>
+        {% endif %}
+    {% elif post.likes.count > 2 and request.user in post.likes.all %}
+        <p>This post is liked by you and {{post.likes.count|add:"-1"}} other users.</p>
+    {% elif post.likes.count > 2 and request.user not in post.likes.all %}
+        <p>This post is liked by {{post.likes.count}} users.</p>    
+    {% else %}
+        <p>Be the first to like this post 🏁</p>
+    {% endif %}
 </div>
