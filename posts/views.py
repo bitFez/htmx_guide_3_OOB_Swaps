@@ -16,8 +16,8 @@ def like_post(request, id):
         if not instance.likes.filter(id=request.user.id).exists():
             instance.likes.add(request.user)
             instance.save() 
-            return render( request, 'posts/partials/likes_area.html', context={'post':instance})
+            return render( request, 'posts/partials/icons_area.html', context={'post':instance})
         else:
             instance.likes.remove(request.user)
             instance.save() 
-            return render( request, 'posts/partials/likes_area.html', context={'post':instance})
+            return render( request, 'posts/partials/icons_area.html', context={'post':instance})
